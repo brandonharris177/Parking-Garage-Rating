@@ -48,19 +48,20 @@ export default function LotSearch() {
                 lots.map(({name, location, photos, rating, review_count, url}) => (
                     <div key={url}>
                         <Container textAlign='center'>
-                            <Image 
+                            {photos[0] ? <Image 
+                                href={url}
                                 src={photos[0]} 
                                 as='a'
                                 size='medium'
                                 alt={name} 
-                                />
+                                />: <p>No Image Available</p>}
                             <p>Name: {name} </p> 
                             <p>Adress: {location.adress1}</p>
                             <p>City: {location.city}</p>
                             <p>State: {location.state}</p>
                             <p>Rating: {rating}</p>
                             <p>Review Count: {review_count}</p>
-                            <p>URL: {location.adress1}</p>
+                            <p>URL: {url}</p>
                             <p>Score: {((review_count*rating)/(review_count+1))}</p>
                         </Container>
                     </div>
