@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { gql, useApolloClient } from '@apollo/client';
 import { Button, Image, Container, Card, Input, Form } from 'semantic-ui-react';
+import './lotSearch.css';
 
 const GET_LOTS = gql`
     query searchByLocation($location: String){
@@ -28,6 +29,10 @@ export default function LotSearch() {
 
     return (
         <div>
+            <div class="title">
+            <h1>Parking Lot Rating App</h1>
+            </div>
+            <div class="search-bar">
             <Form>
                 <Form.Field>
                     <label>
@@ -46,10 +51,12 @@ export default function LotSearch() {
                     setLots(data.search.business)
                     console.log(lots)
                 }}>Search Lots</Button>
+            </div>
             <Container textAlign="center">
             {lots.length > 0 ?
                 lots.map(({name, location, photos, rating, review_count, url}) => (
                     <div key={url}>
+                        <div class="card">
                         <Card href={url}>
                             {photos[0] !== "https://s3-media3.fl.yelpcdn.com/bphoto/None/o.jpg" ? 
                             <Image 
@@ -64,6 +71,7 @@ export default function LotSearch() {
                                 <Card.Description>Review Count: {review_count}</Card.Description>
                             </Card.Content>
                         </Card>
+                        </div>
                     </div>
                 )): <span>No Valid Data</span>}
             </Container>
