@@ -4,16 +4,18 @@ import './index.css';
 import {ApolloClient, createHttpLink, ApolloProvider, InMemoryCache} from '@apollo/client'
 import { setContext } from '@apollo/client/link/context';
 import env from "react-dotenv";
+import LotSearch from "./Components/lotSearch"
 
 const httpLink = createHttpLink({
-  uri: `https://api.yelp.com/v3/graphql`,
+  uri: `http://localhost:8080/https://api.yelp.com/v3/graphql`,
 })
 
 const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: `Bearer ${env.ACCESS_TOKEN}`
+      authorization: `Bearer ${env.ACCESS_TOKEN}`,
+      "Accept-Language": "en_US"
     }
   }
 })
@@ -25,7 +27,7 @@ const client = new ApolloClient({
 
 const App = () => (
   <ApolloProvider client={client}>
-    <h1>This is rendering</h1>
+    <LotSearch/>
   </ApolloProvider>
 );
 
