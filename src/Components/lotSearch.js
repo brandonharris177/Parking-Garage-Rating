@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { gql, useApolloClient } from '@apollo/client';
-import { Button, Image, Container, Input, Form } from 'semantic-ui-react';
+import { Button, Image, Container, Card, Input, Form } from 'semantic-ui-react';
 
 const GET_LOTS = gql`
     query searchByLocation($location: String){
@@ -38,6 +38,7 @@ export default function LotSearch() {
             </Form>
             <Button
                 onClick={async () => {
+                    if (inputValue.length === 0) {return}
                     const { data } = await client.query({
                         query: GET_LOTS,
                         variables: {location: inputValue}
@@ -45,12 +46,12 @@ export default function LotSearch() {
                     setLots(data.search.business)
                     console.log(lots)
                 }}>Search Lots</Button>
-            <div>
+            <Container textAlign="center">
             {lots.length > 0 ?
                 lots.map(({name, location, photos, rating, review_count, url}) => (
                     <div key={url}>
-                        <Container textAlign='center'>
-                            {photos[0] ? <Image 
+                        <Card href={url}>
+                            {photos[0] !== "https://s3-media3.fl.yelpcdn.com/bphoto/None/o.jpg" ? <Image 
                                 href={url}
                                 src={photos[0]} 
                                 as='a'
@@ -58,18 +59,17 @@ export default function LotSearch() {
                                 alt={name} 
                                 circular
                                 />: <p>No Image Available</p>}
-                            <p>Name: {name} </p> 
-                            <p>Adress: {location.adress1}</p>
-                            <p>City: {location.city}</p>
-                            <p>State: {location.state}</p>
-                            <p>Rating: {rating}</p>
-                            <p>Review Count: {review_count}</p>
-                            <p>URL: {url}</p>
-                            <p>Score: {((review_count*rating)/(review_count+1))}</p>
-                        </Container>
+                            <Card.Content>
+                                <Card.Header>{name}</Card.Header>
+                                <Card.Header>Parking Score: {Number.parseFloat((review_count*rating)/(review_count+1)).toFixed(2)}</Card.Header> 
+                                <Card.Meta><span>{location.address1}, {location.city}, {location.state} </span></Card.Meta>
+                                <Card.Description>Rating: {rating}</Card.Description>
+                                <Card.Description>Review Count: {review_count}</Card.Description>
+                            </Card.Content>
+                        </Card>
                     </div>
                 )): <span>No Valid Data</span>}
-            </div>
+            </Container>
         </div>
     )
 }
