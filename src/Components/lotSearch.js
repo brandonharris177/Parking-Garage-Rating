@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { gql, useApolloClient } from '@apollo/client';
-import { Button, Image, Container, Input } from 'semantic-ui-react';
+import { Button, Image, Container, Input, Form } from 'semantic-ui-react';
 
 const GET_LOTS = gql`
     query searchByLocation($location: String){
@@ -28,12 +28,14 @@ export default function LotSearch() {
 
     return (
         <div>
-            <form>
-                <label>
-                    Search Location:
-                    <Input focus placeholder="Search..." type="text" value={inputValue} onChange={e => setInputValue(e.target.value)}/>
-                </label>
-            </form>
+            <Form>
+                <Form.Field>
+                    <label>
+                        Search Location:
+                        <Input focus placeholder="Search..." type="text" value={inputValue} onChange={e => setInputValue(e.target.value)}/>
+                    </label>
+                </Form.Field>
+            </Form>
             <Button
                 onClick={async () => {
                     const { data } = await client.query({
@@ -54,6 +56,7 @@ export default function LotSearch() {
                                 as='a'
                                 size='medium'
                                 alt={name} 
+                                circular
                                 />: <p>No Image Available</p>}
                             <p>Name: {name} </p> 
                             <p>Adress: {location.adress1}</p>
