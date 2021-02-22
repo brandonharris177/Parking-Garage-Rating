@@ -1,0 +1,14 @@
+Set up App
+
+Set up way to communicate with graphql backend 
+-Install Appollo, graphql, react-router-dom
+-check that key works
+-Set up Apollo Client
+
+Set API key to env variable
+-download env-react
+
+Create search query to find parking lots
+
+Styling
+-semantic-ui
