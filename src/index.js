@@ -5,6 +5,7 @@ import {ApolloClient, createHttpLink, ApolloProvider, InMemoryCache} from '@apol
 import { setContext } from '@apollo/client/link/context';
 import env from "react-dotenv";
 import LotSearch from "./Components/lotSearch"
+import 'semantic-ui-css/semantic.min.css'
 
 const httpLink = createHttpLink({
   uri: `http://localhost:8080/https://api.yelp.com/v3/graphql`,
