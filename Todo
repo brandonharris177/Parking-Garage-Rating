@@ -1,14 +1,24 @@
 Set up App
 
+SET-UP
 Set up way to communicate with graphql backend 
 -Install Appollo, graphql, react-router-dom
 -check that key works
 -Set up Apollo Client
 
+ENVIORNMENT
 Set API key to env variable
 -download env-react
 
+SEARCH
 Create search query to find parking lots
+-location
+-address
+-image
+-star rating
+-review count 
+-link
+-score
 
-Styling
+STYLING
 -semantic-ui
