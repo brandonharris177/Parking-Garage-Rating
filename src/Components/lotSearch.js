@@ -51,13 +51,10 @@ export default function LotSearch() {
                 lots.map(({name, location, photos, rating, review_count, url}) => (
                     <div key={url}>
                         <Card href={url}>
-                            {photos[0] !== "https://s3-media3.fl.yelpcdn.com/bphoto/None/o.jpg" ? <Image 
-                                href={url}
+                            {photos[0] !== "https://s3-media3.fl.yelpcdn.com/bphoto/None/o.jpg" ? 
+                            <Image 
                                 src={photos[0]} 
-                                as='a'
-                                size='medium'
                                 alt={name} 
-                                circular
                                 />: <p>No Image Available</p>}
                             <Card.Content>
                                 <Card.Header>{name}</Card.Header>
