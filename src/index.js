@@ -1,17 +1,32 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import {ApolloClient, createHttpLink, ApolloProvider, InMemoryCache} from '@apollo/client'
+import { setContext } from '@apollo/client/link/context';
+import env from "react-dotenv";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+const httpLink = createHttpLink({
+  uri: `https://api.yelp.com/v3/graphql`,
+})
+
+const authLink = setContext((_, { headers }) => {
+  return {
+    headers: {
+      ...headers,
+      authorization: `Bearer ${env.ACCESS_TOKEN}`
+    }
+  }
+})
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(), 
+  link: authLink.concat(httpLink),
+});
+
+const App = () => (
+  <ApolloProvider client={client}>
+    <h1>This is rendering</h1>
+  </ApolloProvider>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+render(<App />, document.getElementById('root'));
